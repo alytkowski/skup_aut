@@ -1,0 +1,63 @@
+﻿@model Samochody.Models.Car
+@using Samochody.Security
+@{
+    ViewBag.Title = "Szczegóły";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>Samochód</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Brand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bought)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bought)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sold)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sold)
+        </dd>
+
+    </dl>
+    <p>Przeglądy:</p>
+    @foreach (var item in Model.Services)
+    {
+        <p>@item.Date - @item.Comment</p>
+    }
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Powrót", "Index")
+</p>

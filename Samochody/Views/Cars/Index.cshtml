@@ -1,0 +1,96 @@
+﻿@model PagedList.IPagedList<Samochody.Models.Car>
+@using PagedList.Mvc;
+@using Samochody.Security
+@{
+    ViewBag.Title = "Samochody";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2>@ViewBag.Title</h2>
+
+    <p>
+        @Html.ActionLink("Dodaj samochód", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Brand)
+            </th>
+            <th>
+                @Html.ActionLink("Model", "Index", new { sortowanie = ViewBag.SortByModel, BrandZnajdz = ViewBag.BrandZnajdz, ModelZnajdz = ViewBag.ModelZnajdz })
+            </th>
+            <th>
+                @Html.ActionLink("Cena", "Index", new { sortowanie = ViewBag.SortByPrice, BrandZnajdz = ViewBag.BrandZnajdz, ModelZnajdz = ViewBag.ModelZnajdz })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Bought)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Sold)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bought)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sold)
+                </td>
+                <td>
+                    @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    Strona @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+                                                                new { page, sortowanie = ViewBag.SortedBy, BrandZnajdz = ViewBag.BrandZnajdz, ModelZnajdz = ViewBag.ModelZnajdz }))
+
+    <br />
+    <h3>Szukaj</h3>
+    @using (Html.BeginForm())
+    {
+        <div>Marka: </div>
+        <div>@Html.TextBox("BrandZnajdz", null, new { @class = "form-control" })</div>
+        <div>Model: </div>
+        <div>@Html.TextBox("ModelZnajdz", null, new { @class = "form-control" })</div>
+        <br />
+        <input class="btn btn-info" type="submit" value="Szukaj" />
+    }
+
+
+
+    <br />
+
+
+
+</body>
+</html>
